@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ListView</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+	
+	<string-array name="Course">
+        <item>Core Java</item>
+        <item>Android</item>
+        <item>PHP</item>
+        <item>Advance Java</item>
+        <item>Advance Java</item>
+        <item>Advance Java</item>
+        <item>Advance Java</item>
+        <item>Advance Java</item>
+        <item>Advance Java</item>
+        <item>Advance Java</item>
+        <item>Advance Java</item>
+        <item>Advance Java</item>
+        <item>Advance Java</item>
+        <item>Advance Java</item>
+        <item>Advance Java</item>
+    </string-array>	
+</resources>

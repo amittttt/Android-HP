@@ -1,0 +1,5 @@
+import com.example.tictactoe.Cell;
+
+public class Empty {
+
+}

@@ -1,0 +1,41 @@
+package com.example.musicplayerhp;
+
+import java.io.File;
+
+import android.media.MediaPlayer;
+import android.os.Bundle;
+import android.os.Environment;
+import android.app.Activity;
+import android.view.Menu;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
+
+public class MainActivity extends Activity {
+	ListView lv;
+	Button bplay,bprev,pnext;
+	ArrayAdapter< String> adapter ;
+	MediaPlayer mp;
+	@Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        lv = (ListView) findViewById(R.id.listView1);
+        mp = MediaPlayer.create(this, R.raw.a);
+      //  File f = new File("/SD card/Songs");
+      //  String list[] = {"A","B","C","D","E", "f" , "g","A","B","C","D","E", "f" , "g" };
+        File f = Environment.getExternalStoragePublicDirectory("music");
+        String list[] = f.list();
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,list);
+        lv.setAdapter(adapter);
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+    
+}

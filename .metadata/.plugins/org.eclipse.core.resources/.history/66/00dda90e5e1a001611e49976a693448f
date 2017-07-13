@@ -1,0 +1,66 @@
+package com.example.sensor;
+
+import java.util.List;
+
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.os.Bundle;
+import android.app.Activity;
+import android.view.Menu;
+import android.widget.TextView;
+
+public class MainActivity extends Activity implements SensorEventListener {
+	SensorManager sm;
+	Sensor sensor;
+	TextView tv;
+    String list="";
+	@Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        sm = (SensorManager)getSystemService(SENSOR_SERVICE);
+        sensor = sm.getDefaultSensor(Sensor.TYPE_ORIENTATION);
+    }
+
+    @Override
+    protected void onResume() {
+    	// TODO Auto-generated method stub
+    	super.onResume();
+    	sm.registerListener(this, sensor, sm.SENSOR_DELAY_NORMAL);
+    }
+    
+    
+    public void listsensor()
+    {
+    	List<Sensor> s = sm.getSensorList(sensor.TYPE_ALL);
+    	for(Sensor l:s)
+    	{
+    		list = list + "" +l.getName()+"" + l.getType()+"\n"; 
+    	}
+    	tv.setText(list);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+
+	@Override
+	public void onAccuracyChanged(Sensor sensor, int accuracy) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onSensorChanged(SensorEvent event) {
+		// TODO Auto-generated method stub
+		
+	}
+    
+}

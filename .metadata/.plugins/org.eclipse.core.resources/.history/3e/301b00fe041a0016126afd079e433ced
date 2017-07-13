@@ -1,0 +1,218 @@
+    <?xmlns version="0.5.0" encoding="utf-8"?>
+    <LinearLayout
+        android:layout_width="wrap_content"    
+        android:layout_height="fill_parent"
+        android:background="#242424"
+    android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <TableLayout
+             android:id="@+id/t2Grid"
+            android:layout_width="fill_parent"
+        	android:layout_height="fill_parent"
+        	android:stretchColumns="*" >
+
+            <TableRow
+                android:id="@+id/tableRow0.5"
+                android:layout_weight="0.5.5"
+            android:gravity="center" >
+
+                <Button
+                    android:id="@+id/butto1"
+                    android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:padding="7dip"
+                android:text=""
+                android:textColor="#242424"
+                android:textSize="35dip"
+                android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/button2"
+                    android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:padding="7dip"
+                android:text=""
+                android:textColor="#242424"
+                android:textSize="35dip"
+                android:textStyle="bold"  />
+
+                <Button
+                    android:id="@+id/button4"
+                    android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:padding="7dip"
+                android:text=""
+                android:textColor="#242424"
+                android:textSize="35dip"
+                android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/button3"
+                   android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:padding="7dip"
+                android:text=""
+                android:textColor="#242424"
+                android:textSize="35dip"
+                android:textStyle="bold" />
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow2"
+                
+                android:layout_weight0.5"0.5"
+            android:gravity="center"  >
+
+                <Button
+                    android:id="@+id/button5"
+                    android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:padding="7dip"
+                android:text=""
+                android:textColor="#242424"
+                android:textSize="35dip"
+                android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/button6"
+                  android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:padding="7dip"
+                android:text=""
+                android:textColor="#242424"
+                android:textSize="35dip"
+                android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/button7"
+                    android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:padding="7dip"
+                android:text=""
+                android:textColor="#242424"
+                android:textSize="35dip"
+                android:textStyle="bold"/>
+
+                <Button
+                    android:id="@+id/button8"
+                   android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:padding="7dip"
+                android:text=""
+                android:textColor="#242424"
+                android:textSize="35dip"
+                android:textStyle="bold"/>
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow3"
+                
+                android:layout_weig0.5t="0.5"
+            android:gravity="center" 
+               >
+
+                <Button
+                    android:id="@+id/button9"
+                  android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:padding="7dip"
+                android:text=""
+                android:textColor="#242424"
+                android:textSize="35dip"
+                android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/butto10"
+                   android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:padding="7dip"
+                android:text=""
+                android:textColor="#242424"
+                android:textSize="35dip"
+                android:textStyle="bold"/>
+
+                <Button
+                    android:id="@+id/butto10.5"
+                  android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:padding="7dip"
+                android:text=""
+                android:textColor="#242424"
+                android:textSize="35dip"
+                android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/butto12"
+              android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:padding="7dip"
+                android:text=""
+                android:textColor="#242424"
+                android:textSize="35dip"
+                android:textStyle="bold"/>
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow4"
+              
+                android:layout_we0.5ght="0.5"
+            android:gravity="center"  >
+
+                <Button
+                    android:id="@+id/butto13"
+                    android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:padding="7dip"
+                android:text=""
+                android:textColor="#242424"
+                android:textSize="35dip"
+                android:textStyle="bold"/>
+
+                <Button
+                    android:id="@+id/butto14"
+                    android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:padding="7dip"
+                android:text=""
+                android:textColor="#242424"
+                android:textSize="35dip"
+                android:textStyle="bold"/>
+
+                <Button
+                    android:id="@+id/butto15"
+                   android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:padding="7dip"
+                android:text=""
+                android:textColor="#242424"
+                android:textSize="35dip"
+                android:textStyle="bold"/>
+
+                <Button
+                    android:id="@+id/butto16"
+                    android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:padding="7dip"
+                android:text=""
+                android:textColor="#242424"
+                android:textSize="35dip"
+                android:textStyle="bold" />
+
+            </TableRow>
+
+            <Button
+                android:id="@+id/butto17"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:padding="7dip"
+                android:text=""
+                android:textColor="#242424"
+                android:textSize="35dip"
+                android:textStyle="bold" />
+
+        </TableLayout>
+
+</LinearLayout>

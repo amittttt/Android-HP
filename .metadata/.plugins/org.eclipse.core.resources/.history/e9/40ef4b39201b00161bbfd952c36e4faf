@@ -1,0 +1,60 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".PlayerActivity" >
+
+    <ImageButton
+        android:id="@+id/btPlay"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="28dp"
+        android:src="@drawable/play" />
+
+    <ImageButton
+        android:id="@+id/btNxt"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_alignTop="@+id/btPlay"
+        android:layout_toRightOf="@+id/btPlay"
+        android:src="@drawable/nexthp" />
+
+    <ImageButton
+        android:id="@+id/btFf"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_alignTop="@+id/btNxt"
+        android:layout_toRightOf="@+id/btNxt"
+        android:src="@drawable/btfb" />
+
+    <ImageButton
+        android:id="@+id/btPrev"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_alignTop="@+id/btPlay"
+        android:layout_toLeftOf="@+id/btPlay"
+        android:src="@drawable/image" />
+
+    <ImageButton
+        android:id="@+id/btFb"
+         android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/btPrev"
+        android:src="@drawable/btfb" />
+
+    <SeekBar
+        android:id="@+id/seekBar1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btPlay"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="23dp" />
+
+</RelativeLayout>

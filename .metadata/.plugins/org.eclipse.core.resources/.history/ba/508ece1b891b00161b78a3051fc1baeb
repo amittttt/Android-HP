@@ -1,0 +1,198 @@
+package com.example.projectmediaplayer;
+
+import java.io.File;
+import java.util.ArrayList;
+
+import android.media.MediaPlayer;
+import android.net.Uri;
+import android.os.Bundle;
+import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
+
+public class PlayerActivity extends Activity implements OnClickListener{
+static MediaPlayer mp;
+ArrayList<File> mySongs;
+int position;
+SeekBar sb;
+Uri u;
+ImageButton btPlay,btff,btFb,btPrev,btNext;
+NotificationManager nm;
+Thread UpdateSeekBar;
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_player);
+		
+		btPlay=(ImageButton)findViewById(R.id.btPlay);
+		btff=(ImageButton)findViewById(R.id.btFf);
+		btFb=(ImageButton)findViewById(R.id.btFb);
+		btPrev=(ImageButton)findViewById(R.id.btPrev);
+		btNext=(ImageButton)findViewById(R.id.btNxt);
+		
+		btPlay.setOnClickListener(this);
+		btff.setOnClickListener(this);
+		btFb.setOnClickListener(this);
+		btPrev.setOnClickListener(this);
+		btNext.setOnClickListener(this);
+		nm=(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+		Notification.Builder nb=new Notification.Builder(this);
+		
+		
+		Intent intent = new Intent( getApplicationContext(), MediaPlalyerService.class );
+		intent.setAction( MediaPlalyerService.AUDIO_SERVICE );
+		startService( intent );
+		
+		PendingIntent pi=PendingIntent.getActivity(this, (int)System.currentTimeMillis(), intent, 0);
+		nb.setSmallIcon(R.drawable.ic_launcher);
+		nb.setTicker("Media name");
+		nb.setContentIntent(pi).getNotification();
+		
+		nb.setContentText("Media_Artist");
+		nb.setAutoCancel(true);
+		nb.addAction(android.R.drawable.ic_lock_power_off, "Prev", pi);
+		nb.addAction(android.R.drawable.ic_lock_power_off, "Play", pi);
+		nb.addAction(android.R.drawable.ic_lock_power_off, "Next", pi);
+		
+		Notification n=nb.build();
+		nm.notify((int)System.currentTimeMillis(),n);
+		sb=(SeekBar)findViewById(R.id.seekBar1);
+	//	int totalDuration = 0;
+	//`	sb.setMax(totalDuration);
+		UpdateSeekBar=new Thread()
+		{
+			public void run() 
+			{
+				int totalDuration=mp.getDuration();
+				int currentPosition=0;
+				while(currentPosition < totalDuration)
+				{
+					try{
+						sleep(500);
+						currentPosition=mp.getCurrentPosition();
+						sb.setProgress(currentPosition);
+					}
+					catch (Exception e) {
+						// TODO: handle exception
+						e.printStackTrace();
+					}
+				}
+				//super.run();
+				
+			};
+		};
+		
+		if(mp!=null)
+		{
+			mp.stop();
+			mp.release();
+		}
+		
+		Intent i=getIntent();
+		Bundle b=i.getExtras();
+	    mySongs=(ArrayList)b.getParcelableArrayList("songList");
+		position=b.getInt("pos",0);
+		
+	   u=Uri.parse(mySongs.get(position).toString());
+		mp=MediaPlayer.create(getApplicationContext(),u);
+		mp.start();
+		
+		sb.setMax(mp.getDuration());
+		UpdateSeekBar.start();
+		
+		sb.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+			
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+				// TODO Auto-generated method stub
+				mp.seekTo(seekBar.getProgress());
+			}
+			
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress,
+					boolean fromUser) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.player, menu);
+		return true;
+	}
+
+
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+	int id=v.getId();
+	switch(id)
+	{
+	case R.id.btPlay:
+		if(mp.isPlaying())
+		{
+			
+			mp.pause();
+		}
+		else
+		{ 
+			mp.start();
+			
+		}
+		break;
+	case R.id.btFf:
+		mp.seekTo(mp.getCurrentPosition()+5000);
+		break;
+	case R.id.btFb:
+		mp.seekTo(mp.getCurrentPosition()-5000);
+		break;
+	case R.id.btNxt:
+		mp.stop();
+		mp.release();
+		Uri u=Uri.parse(mySongs.get((position+1)%mySongs.size()).toString());
+		mp=MediaPlayer.create(getApplicationContext(),u);
+		mp.start();
+		sb.setMax(mp.getDuration());
+	    break;
+	case R.id.btPrev:
+		mp.stop();
+		mp.release();
+		/*if(position-1<0)
+		{
+			position=mySongs.size()-1;
+		}
+		else
+		{
+			position = position-1;
+		}*/
+		 u=Uri.parse(mySongs.get((position-1<0)?mySongs.size()-1:position-1).toString());
+		
+		mp=MediaPlayer.create(getApplicationContext(),u);
+		mp.start();
+		sb.setMax(mp.getDuration());
+	    break;
+	}
+	}
+
+}

@@ -1,0 +1,214 @@
+package com.example.projectmediaplayer;
+
+import java.io.File;
+import java.util.ArrayList;
+
+
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.media.MediaPlayer;
+import android.net.Uri;
+import android.os.Bundle;
+import android.app.Activity;
+import android.content.Intent;
+import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
+
+public class PlayerActivity extends Activity implements OnClickListener , SensorEventListener{
+static MediaPlayer mp;
+ArrayList<File> mySongs;
+int position;
+SeekBar sb;
+Uri u;
+Button btPlay,btff,btFb,btPrev,btNext;
+SensorManager sm;
+Sensor sensor;
+Thread UpdateSeekBar;
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_player);
+		 sm = (SensorManager)getSystemService(SENSOR_SERVICE);
+		 sensor = sm.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+		
+		btPlay=(Button)findViewById(R.id.btPlay);
+		btff=(Button)findViewById(R.id.btFf);
+		btFb=(Button)findViewById(R.id.btFb);
+		btPrev=(Button)findViewById(R.id.btPrev);
+		btNext=(Button)findViewById(R.id.btNxt);
+		
+		btPlay.setOnClickListener(this);
+		btff.setOnClickListener(this);
+		btFb.setOnClickListener(this);
+		btPrev.setOnClickListener(this);
+		btNext.setOnClickListener(this);
+		
+		sb=(SeekBar)findViewById(R.id.seekBar1);
+	//	int totalDuration = 0;
+	//`	sb.setMax(totalDuration);
+		UpdateSeekBar=new Thread()
+		{
+			public void run() 
+			{
+				int totalDuration=mp.getDuration();
+				int currentPosition=0;
+				while(currentPosition < totalDuration)
+				{
+					try{
+						sleep(500);
+						currentPosition=mp.getCurrentPosition();
+						sb.setProgress(currentPosition);
+					}
+					catch (Exception e) {
+						// TODO: handle exception
+						e.printStackTrace();
+					}
+				}
+				//super.run();
+				
+			};
+		};
+		
+		if(mp!=null)
+		{
+			mp.stop();
+			mp.release();
+		}
+		
+		Intent i=getIntent();
+		Bundle b=i.getExtras();
+	    mySongs=(ArrayList)b.getParcelableArrayList("songList");
+		position=b.getInt("pos",0);
+		
+	   u=Uri.parse(mySongs.get(position).toString());
+		mp=MediaPlayer.create(getApplicationContext(),u);
+		mp.start();
+		
+		sb.setMax(mp.getDuration());
+		UpdateSeekBar.start();
+		
+		sb.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+			
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+				// TODO Auto-generated method stub
+				mp.seekTo(seekBar.getProgress());
+			}
+			
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress,
+					boolean fromUser) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.player, menu);
+		return true;
+	}
+
+
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+	int id=v.getId();
+	switch(id)
+	{
+	case R.id.btPlay:
+		if(mp.isPlaying())
+		{
+			btPlay.setText(">");
+			mp.pause();
+		}
+		else
+		{ 
+			mp.start();
+			btPlay.setText("||");
+		}
+		break;
+	case R.id.btFf:
+		mp.seekTo(mp.getCurrentPosition()+5000);
+		break;
+	case R.id.btFb:
+		mp.seekTo(mp.getCurrentPosition()-5000);
+		break;
+	case R.id.btNxt:
+		mp.stop();
+		mp.release();
+		Uri u=Uri.parse(mySongs.get((position+1)%mySongs.size()).toString());
+		mp=MediaPlayer.create(getApplicationContext(),u);
+		mp.start();
+		sb.setMax(mp.getDuration());
+	    break;
+	case R.id.btPrev:
+		mp.stop();
+		mp.release();
+		/*if(position-1<0)
+		{
+			position=mySongs.size()-1;
+		}
+		else
+		{
+			position = position-1;
+		}*/
+		 u=Uri.parse(mySongs.get((position-1<0)?mySongs.size()-1:position-1).toString());
+		
+		mp=MediaPlayer.create(getApplicationContext(),u);
+		mp.start();
+		sb.setMax(mp.getDuration());
+	    break;
+	}
+	}
+
+	protected void onResume() {
+    	// TODO Auto-generated method stub
+    	super.onResume();
+    	sm.registerListener(this, sensor, sm.SENSOR_DELAY_NORMAL);
+    }
+	
+	@Override
+	public void onAccuracyChanged(Sensor sensor, int accuracy) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onSensorChanged(SensorEvent event) {
+		// TODO Auto-generated method stub
+	
+		float[] f= event.values;
+		Float x = f[0];
+		Float y = f[1];
+		Float z = f[2];
+		
+		if(x==0)
+		  {
+			mp.pause();
+		  }
+		if(x==1)
+		{
+			mp.start(); 
+		}
+		  
+	}
+
+}

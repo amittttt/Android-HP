@@ -1,0 +1,81 @@
+package com.example.readandwrite;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+
+import android.os.Bundle;
+import android.app.Activity;
+import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+public class MainActivity extends Activity {
+	
+	EditText data,filetext;
+	Button bwrite,bread ; 
+	FileOutputStream fout ;
+	OutputStreamWriter out;
+	FileInputStream fis;
+	@Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        filetext = (EditText) findViewById(R.id.filename);
+        data = (EditText) findViewById(R.id.data);
+        bwrite = (Button) findViewById(R.id.write);
+        bread = (Button) findViewById(R.id.read);
+    }
+    
+    public void writedata(View v)
+    {
+     
+		
+    	try
+    	{
+    		FileOutputStream fout = new FileOutputStream("sdcard/"+filetext.getText().toString());
+    		OutputStreamWriter out = new OutputStreamWriter(fout);
+        	
+    		out.write("Hello Jai bhai :-p");
+    		Toast.makeText(this, "Saved" , Toast.LENGTH_SHORT).show();
+    	}
+    	catch(Exception e)
+    	{
+    		data.setText(e.toString());
+    	}
+    	finally
+    	{
+    		try
+    		{
+    			if(fout!=null)
+    			{
+    				fout.close();
+    			}
+    		}
+    			catch(Exception e)
+    			{	
+    				data.setText(e.toString());
+    			}
+    		
+    	
+    	}
+    }
+    public void readdata(View V)
+    {
+    	
+   
+    	
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+    
+}

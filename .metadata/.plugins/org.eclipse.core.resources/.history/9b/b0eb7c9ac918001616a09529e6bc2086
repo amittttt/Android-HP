@@ -1,0 +1,53 @@
+package com.example.sqllite;
+
+import android.os.Bundle;
+import android.app.Activity;
+import android.database.sqlite.SQLiteDatabase;
+import android.view.Menu;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+public class MainActivity extends Activity {
+
+	SQLiteDatabase db;
+	EditText fname,lname,add;
+    Button binsert,bupdate,bsearch,bdelete;
+	@Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        fname = (EditText)findViewById(R.id.fname);
+        lname = (EditText)findViewById(R.id.lname);
+        add = (EditText)findViewById(R.id.add);
+      binsert = (Button) findViewById(R.id.insert); 
+       bupdate = (Button) findViewById(R.id.update);
+        //bsearch = (Button) findViewById(R.id.search);
+       // bdelete = (Button) findViewById(R.id.delete);
+        
+        SQLiteDatabase db = openOrCreateDatabase("KIIT",MODE_PRIVATE,null);
+        
+        if(db!=null)
+        {
+        	Toast.makeText(this, "Database Created", Toast.LENGTH_LONG).show();
+        }
+    /*    try
+        {
+        	db.execSQL("create table student (first_name varchar(23), last_name varchar(20),address varchar(150));"	);
+        			
+        }
+        catch (Exception e) {
+			// TODO: handle exception
+        	Toast.makeText(this, "Table Not Created", Toast.LENGTH_LONG).show();
+		}*/
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+    
+}
